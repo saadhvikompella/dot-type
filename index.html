@@ -9,15 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#000; --mute:#555; --hot:#ff4d2e; --nav:44px; --mq:30px; --side:380px;
+  --ink:#000; --mute:#555; --hot:#ff4d2e; --nav:44px; --side:380px;
   --ff:Montserrat,"Avenir Next","Helvetica Neue",Arial,sans-serif;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{
   font:12px/1.45 var(--ff);color:#000;background:#fff;
-  display:grid;grid-template-columns:minmax(0,1fr) var(--side);grid-template-rows:auto auto minmax(0,1fr);
-  grid-template-areas:"nav nav" "mq mq" "main side";
+  display:grid;grid-template-columns:minmax(0,1fr) var(--side);grid-template-rows:auto minmax(0,1fr);
+  grid-template-areas:"nav nav" "main side";
   height:100vh;height:100dvh;overflow:hidden;
 }
 
@@ -36,12 +36,6 @@ button.cell:hover{background:#000;color:#fff}
 .cell .dot{width:7px;height:7px;border-radius:50%;background:var(--hot);display:inline-block}
 button.cell:hover .dot{background:#fff}
 
-/* ---- marquee strip ---- */
-.mq{grid-area:mq;height:var(--mq);border-bottom:1px solid #000;overflow:hidden;display:flex;align-items:center;white-space:nowrap}
-.mq .track{display:inline-flex;width:max-content;animation:mq 42s linear infinite}
-.mq span{padding:0 22px;font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
-@keyframes mq{to{transform:translateX(-50%)}}
-
 /* ---- stage cell ---- */
 .main{grid-area:main;display:flex;align-items:center;justify-content:center;padding:20px;min-width:0;min-height:0;border-right:1px solid #000;background:#fff}
 .frame{display:inline-flex;flex-direction:column;border:1px solid #000;max-width:100%;background:#fff}
@@ -50,7 +44,7 @@ button.cell:hover .dot{background:#fff}
 .stage{position:relative;display:block;line-height:0;touch-action:none;overflow:hidden;
   background:#f1f1f1 radial-gradient(#c9c9c9 1px,transparent 1.2px) 0 0/10px 10px}
 #cv{display:block;margin:0 auto;max-width:100%;
-  max-height:calc(100vh - var(--nav) - var(--mq) - 204px);max-height:calc(100dvh - var(--nav) - var(--mq) - 204px);
+  max-height:calc(100vh - var(--nav) - 204px);max-height:calc(100dvh - var(--nav) - 204px);
   width:auto;height:auto;cursor:grab}
 #cv.dragging{cursor:grabbing}
 #sel{position:absolute;border:1px dashed var(--hot);pointer-events:none;display:none}
@@ -165,7 +159,6 @@ button{font-family:var(--ff);cursor:pointer}
   .chip{padding:9px 13px}
   input[type=checkbox]{width:20px;height:20px}
 }
-@media (prefers-reduced-motion:reduce){ .mq .track{animation:none} }
 </style>
 </head>
 <body>
@@ -180,10 +173,6 @@ button{font-family:var(--ff);cursor:pointer}
   <button class="cell" data-go="s-export">Export</button>
   <div class="cell icon star" aria-hidden="true">&#10033;</div>
 </header>
-<div class="mq" aria-hidden="true"><div class="track">
-  <span>&#10033; Text to dots</span><span>&#10033; Loop every layer</span><span>&#10033; Export video</span><span>&#10033; Drag any word</span>
-  <span>&#10033; Text to dots</span><span>&#10033; Loop every layer</span><span>&#10033; Export video</span><span>&#10033; Drag any word</span>
-</div></div>
 <div class="main">
   <div class="frame">
     <div class="cap"><span>Fig. 01 &mdash; Dot Type</span><span id="figSize">1080 &times; 1350</span></div>
