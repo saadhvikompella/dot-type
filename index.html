@@ -9,21 +9,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#000; --mute:#555; --hot:#ff4d2e; --nav:44px; --side:380px;
+  --ink:#000; --mute:#555; --hot:#ff4d2e; --nav:44px;
   --ff:Montserrat,"Avenir Next","Helvetica Neue",Arial,sans-serif;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{
   font:12px/1.45 var(--ff);color:#000;background:#fff;
-  display:grid;grid-template-columns:minmax(0,1fr) var(--side);grid-template-rows:auto minmax(0,1fr);
-  grid-template-areas:"nav nav" "main side";
+  display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto minmax(0,1fr);
+  grid-template-areas:"navl navr" "main side";
   height:100vh;height:100dvh;overflow:hidden;
 }
 
 /* ---- top nav: row of bordered cells ---- */
-.nav{grid-area:nav;display:flex;height:var(--nav);border-bottom:1px solid #000;overflow-x:auto;scrollbar-width:none;background:#fff}
-.nav::-webkit-scrollbar{display:none}
+.nav{display:contents}
+.nav-l,.nav-r{display:flex;height:var(--nav);border-bottom:1px solid #000;background:#fff;min-width:0}
+.nav-l{grid-area:navl;overflow:hidden}
+.nav-r{grid-area:navr}
 .cell{
   flex:none;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 14px;margin:0;
   border:0;border-right:1px solid #000;border-radius:0;background:#fff;color:#000;
@@ -56,7 +58,7 @@ button.cell:hover .dot{background:#fff}
 .tl{display:flex;align-items:center;justify-content:center;min-width:100px;padding:0 12px;border-left:1px solid #000;font-size:10px;letter-spacing:.06em;font-variant-numeric:tabular-nums;white-space:nowrap}
 
 /* ---- control panel ---- */
-aside{grid-area:side;background:#fff;height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+aside{grid-area:side;contain:inline-size;min-width:0;background:#fff;height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 #panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-content:start;margin-right:-1px;counter-reset:sec}
 .head{grid-column:1/-1;position:relative;padding:20px 16px 18px;border-bottom:1px solid #000;border-right:1px solid #000}
 .head .star{position:absolute;right:16px;top:12px;font-size:34px;line-height:1}
@@ -130,10 +132,13 @@ button{font-family:var(--ff);cursor:pointer}
 /* ---- tablet and phone ---- */
 @media (max-width:900px){
   body{display:block;height:auto;overflow:visible}
+  .nav{display:flex;height:var(--nav);border-bottom:1px solid #000;overflow-x:auto;scrollbar-width:none;background:#fff}
+  .nav::-webkit-scrollbar{display:none}
+  .nav-l,.nav-r{display:contents}
   .main{position:sticky;top:0;z-index:10;padding:10px 12px;border-right:0;border-bottom:1px solid #000}
   .frame{display:flex;width:100%}
   #cv{max-height:40vh;max-height:40dvh}
-  aside{height:auto;overflow:visible}
+  aside{height:auto;overflow:visible;overflow-x:clip}
   section{scroll-margin-top:calc(40dvh + 110px)}
   .head{scroll-margin-top:calc(40dvh + 110px)}
 }
@@ -163,15 +168,19 @@ button{font-family:var(--ff);cursor:pointer}
 </head>
 <body>
 <header class="nav" aria-label="Studio navigation">
+ <div class="nav-l">
   <div class="cell brand">Dot Type Studio</div>
   <button class="cell" data-go="s-text">Text</button>
   <button class="cell" data-go="s-type">Type</button>
+ </div>
+ <div class="nav-r">
   <button class="cell" data-go="s-dots">Dots</button>
   <button class="cell" data-go="s-noise">Noise</button>
   <button class="cell" data-go="s-color">Color</button>
   <button class="cell" data-go="s-animate">Animate</button>
   <button class="cell" data-go="s-export">Export</button>
   <div class="cell icon star" aria-hidden="true">&#10033;</div>
+ </div>
 </header>
 <div class="main">
   <div class="frame">
